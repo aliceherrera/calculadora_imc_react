@@ -1,0 +1,20 @@
+.tabela {
+    padding: 32px;
+    margin: 0 auto;
+}
+
+.th {
+    background-color: #41d892;
+    color: #ffffff;
+    padding: 8px 60px 8px;
+
+}
+
+.td {
+    padding: 16px;
+    border-bottom: 2px dashed rgba(65, 216, 146, .4);
+}
+
+.tdActive{
+    border: 2px solid #41d892;
+}
