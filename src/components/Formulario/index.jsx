@@ -2,19 +2,30 @@ import { useEffect, useState } from 'react';
 import styles from './Formulario.module.css'
 
 const Formulario = () => {
-
-    function handleSubmit(e) {
-        e.preventDefault()
-    }
-
+    
     const [altura, setAltura] = useState(0);
     const [peso, setPeso] = useState(0);
+    const [imc, setImc] = useState(0);
+    
+    function handleSubmit(e) {
+        e.preventDefault()
+        const convertAltura = altura / 100;
+        setImc(parseFloat((peso / (convertAltura * convertAltura)).toFixed(1))); 
+    }
+
+    useEffect(() => {
+        renderizaIMC()
+    }, [imc])
 
     const renderizaIMC = () => {
-        const convertAltura = altura / 100;
-        const imc = parseFloat((peso / (convertAltura * convertAltura)).toFixed(1)); 
+        
+        if (imc < 1){
+            return (
+                <h2 className={styles.h2}>Insira os dados e clique no botão acima para calcular</h2> 
+            )
+        }
 
-        if (imc < 18.5) {
+        else if (imc < 18.5) {
             return (
                 <h2 className={styles.h2}>Seu IMC é de {imc} (Magreza)</h2>
             )
@@ -66,8 +77,9 @@ const Formulario = () => {
                     <input id='inputPeso' className={styles.input} type="number" placeholder='insira seu peso' onChange={e => setPeso(e.target.value)}/>
                     <label className={styles.unidadeMedida} htmlFor="inputPeso">Peso em kg</label>
                 </div>
-                <button type='submit' onClick={renderizaIMC}>Calcular o IMC</button>
+                <button className={styles.botao} type='submit' onClick={handleSubmit}>Calcular o IMC</button>
             </form>
+            {renderizaIMC()}
         </div>
     )
 }
